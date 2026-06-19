@@ -1,0 +1,632 @@
+/* ─── Design Tokens ──────────────────────────────────────────────────────── */
+:root {
+  /* Dark theme (default) */
+  --color-bg:        #1a1a2e;
+  --color-surface:   #16213e;
+  --color-accent:    #0f3460;
+  --color-highlight: #e94560;
+  --color-text:      #eaeaea;
+  --color-muted:     #888;
+
+  /* Spacing */
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+
+  /* Radii */
+  --radius-md: 8px;
+
+  /* Timer */
+  --timer-font-size: 3rem;
+}
+
+/* ─── Light Theme Tokens ─────────────────────────────────────────────────── */
+[data-theme="light"] {
+  --color-bg:        #f5f5f0;
+  --color-surface:   #ffffff;
+  --color-accent:    #e0e0d8;
+  --color-highlight: #e94560;
+  --color-text:      #1a1a2e;
+  --color-muted:     #666;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Base ───────────────────────────────────────────────────────────────── */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  min-height: 100vh;
+  padding-bottom: var(--space-lg);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* ─── Topbar ─────────────────────────────────────────────────────────────── */
+#topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-accent);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+#topbar-title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+#btn-theme-toggle {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 var(--space-sm);
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 1.2rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, color 0.3s ease;
+}
+
+#btn-theme-toggle:hover {
+  background: var(--color-highlight);
+}
+
+#btn-theme-toggle:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+/* ─── Dashboard Grid ─────────────────────────────────────────────────────── */
+#dashboard {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: var(--space-lg);
+  padding: var(--space-lg);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ─── Widget Card ────────────────────────────────────────────────────────── */
+.widget {
+  background: var(--color-surface);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ─── Widget Headings ────────────────────────────────────────────────────── */
+.widget h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: var(--space-md);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 680px) {
+  #dashboard {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Greeting Widget ────────────────────────────────────────────────────── */
+#greeting-widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+#greeting-text {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  line-height: 1.2;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  width: fit-content;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px; /* offset the padding so text stays aligned */
+  transition: background 0.15s;
+}
+
+#greeting-text:hover {
+  background: color-mix(in srgb, var(--color-highlight) 12%, transparent);
+}
+
+#greeting-text::after {
+  content: '✏';
+  font-size: 0.9rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+  font-weight: 400;
+}
+
+#greeting-text:hover::after {
+  opacity: 0.6;
+}
+
+/* Inline name editor that replaces the h1 */
+#greeting-edit-input {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--color-highlight);
+  border-radius: 0;
+  outline: none;
+  width: 100%;
+  line-height: 1.2;
+  padding: 2px 0;
+  caret-color: var(--color-highlight);
+}
+
+#greeting-time {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-highlight);
+  letter-spacing: 0.05em;
+}
+
+#greeting-date {
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+#greeting-hint {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* ─── Focus Timer Widget ─────────────────────────────────────────────────── */
+#timer-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  text-align: center;
+}
+
+#timer-display {
+  font-size: var(--timer-font-size);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 700;
+  color: var(--color-highlight);
+  letter-spacing: 0.05em;
+}
+
+/* Duration selector */
+#timer-duration-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+}
+
+.duration-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.btn-duration {
+  padding: 2px var(--space-sm);
+  background: var(--color-accent);
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-duration:hover:not(:disabled) {
+  color: var(--color-text);
+}
+
+.btn-duration.active {
+  background: var(--color-highlight);
+  color: #fff;
+}
+
+.btn-duration:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.btn-duration:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+.duration-custom-label {
+  font-size: 0.75rem;
+  color: var(--color-muted);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+#timer-custom-minutes {
+  width: 56px;
+  padding: 2px 6px;
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+#timer-custom-minutes:focus {
+  outline: none;
+  border-color: var(--color-highlight);
+}
+
+#timer-custom-minutes:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* hide number input spinners */
+#timer-custom-minutes::-webkit-inner-spin-button,
+#timer-custom-minutes::-webkit-outer-spin-button {
+  opacity: 0.5;
+}
+
+#timer-controls {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+#timer-controls button {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s, opacity 0.2s;
+}
+
+#timer-controls button:hover:not(:disabled) {
+  background: var(--color-highlight);
+}
+
+#timer-controls button:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+#timer-controls button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ─── To-Do Widget ───────────────────────────────────────────────────────── */
+#todo-widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+#add-task-form {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+#add-task-form input {
+  flex: 1;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+#add-task-form input::placeholder {
+  color: var(--color-muted);
+}
+
+#add-task-form input:focus {
+  outline: none;
+  border-color: var(--color-highlight);
+}
+
+#add-task-form button {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-highlight);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+#add-task-form button:hover {
+  opacity: 0.85;
+}
+
+#add-task-form button:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+#task-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+#task-list::-webkit-scrollbar {
+  width: 4px;
+}
+#task-list::-webkit-scrollbar-track {
+  background: var(--color-accent);
+  border-radius: 2px;
+}
+#task-list::-webkit-scrollbar-thumb {
+  background: var(--color-highlight);
+  border-radius: 2px;
+}
+
+#task-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+}
+
+.task-description {
+  flex: 1;
+  font-size: 0.9rem;
+  word-break: break-word;
+}
+
+.task-completed .task-description {
+  text-decoration: line-through;
+  color: var(--color-muted);
+}
+
+#task-list button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-muted);
+  font-size: 1rem;
+  padding: 0 var(--space-sm);
+  border-radius: var(--radius-md);
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+#task-list button:hover {
+  color: var(--color-highlight);
+}
+
+#task-list button:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+.task-completed .btn-toggle {
+  color: var(--color-highlight);
+}
+
+.task-edit-input {
+  flex: 1;
+  padding: 2px var(--space-sm);
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-highlight);
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+/* ─── Quick Links Widget ─────────────────────────────────────────────────── */
+#links-widget {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+#add-link-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+#add-link-form input {
+  flex: 1;
+  min-width: 100px;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-accent);
+  color: var(--color-text);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-size: 0.9rem;
+}
+
+#add-link-form input::placeholder {
+  color: var(--color-muted);
+}
+
+#add-link-form input:focus {
+  outline: none;
+  border-color: var(--color-highlight);
+}
+
+#add-link-form button {
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-highlight);
+  color: var(--color-text);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+#add-link-form button:hover {
+  opacity: 0.85;
+}
+
+#add-link-form button:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+#link-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.link-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  background: var(--color-accent);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.link-item a {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.link-item a:hover {
+  background: var(--color-highlight);
+}
+
+.link-item a:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: -2px;
+}
+
+.link-item .btn-delete-link {
+  padding: var(--space-sm);
+  background: none;
+  border: none;
+  color: var(--color-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: color 0.2s;
+  line-height: 1;
+}
+
+.link-item .btn-delete-link:hover {
+  color: var(--color-highlight);
+}
+
+.link-item .btn-delete-link:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+/* ─── Empty State ────────────────────────────────────────────────────────── */
+.empty-state {
+  color: var(--color-muted);
+  font-size: 0.85rem;
+  font-style: italic;
+  list-style: none;
+  padding: var(--space-sm) 0;
+}
+
+/* ─── Task Sort Controls ─────────────────────────────────────────────────── */
+#task-sort-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+}
+
+.sort-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.btn-sort {
+  padding: 2px var(--space-sm);
+  background: var(--color-accent);
+  color: var(--color-muted);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.btn-sort:hover {
+  color: var(--color-text);
+}
+
+.btn-sort.active {
+  background: var(--color-highlight);
+  color: #fff;
+  border-color: transparent;
+}
+
+.btn-sort:focus-visible {
+  outline: 2px solid var(--color-highlight);
+  outline-offset: 2px;
+}
+
+/* ─── Task Duplicate Error ───────────────────────────────────────────────── */
+.task-error {
+  font-size: 0.8rem;
+  color: var(--color-highlight);
+  min-height: 1em;
+  font-style: italic;
+}

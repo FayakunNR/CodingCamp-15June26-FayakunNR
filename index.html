@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Life Dashboard ✓</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Resolve theme before paint to prevent flash of wrong theme -->
+  <script>
+    (function () {
+      try {
+        var stored = localStorage.getItem('theme');
+        if (stored === 'light' || stored === 'dark') {
+          document.documentElement.setAttribute('data-theme', stored);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+        }
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+</head>
+<body>
+  <header id="topbar">
+    <span id="topbar-title">Life Dashboard</span>
+    <button id="btn-theme-toggle" aria-label="Switch to light mode">☀️</button>
+  </header>
+  <main id="dashboard">
+    <section id="greeting-widget" class="widget">
+      <h2>Welcome</h2>
+      <h1 id="greeting-text">Good Morning</h1>
+      <p id="greeting-time">00:00 AM</p>
+      <p id="greeting-date">Monday, January 1</p>
+    </section>
+    <section id="timer-widget" class="widget">
+      <h2>Focus Timer</h2>
+      <div id="timer-display">25:00</div>
+      <div id="timer-duration-controls" aria-label="Set timer duration">
+        <span class="duration-label">Duration:</span>
+        <button class="btn-duration" data-minutes="15">15 min</button>
+        <button class="btn-duration active" data-minutes="25">25 min</button>
+        <button class="btn-duration" data-minutes="45">45 min</button>
+        <button class="btn-duration" data-minutes="60">60 min</button>
+        <label class="duration-custom-label" for="timer-custom-minutes">Custom:
+          <input
+            id="timer-custom-minutes"
+            type="number"
+            min="1"
+            max="180"
+            placeholder="min"
+            aria-label="Custom duration in minutes"
+          />
+        </label>
+      </div>
+      <div id="timer-controls">
+        <button id="btn-start">Start</button>
+        <button id="btn-stop" disabled>Stop</button>
+        <button id="btn-reset">Reset</button>
+      </div>
+    </section>
+    <section id="todo-widget" class="widget">
+      <h2>To-Do List</h2>
+      <form id="add-task-form" autocomplete="off">
+        <input
+          id="task-input"
+          type="text"
+          placeholder="Add a task…"
+          autocomplete="off"
+          aria-label="New task description"
+        />
+        <button type="submit">Add</button>
+      </form>
+      <div id="task-sort-controls" aria-label="Sort tasks">
+        <span class="sort-label">Sort:</span>
+        <button class="btn-sort active" data-sort="default" aria-pressed="true">Default</button>
+        <button class="btn-sort" data-sort="az" aria-pressed="false">A–Z</button>
+        <button class="btn-sort" data-sort="pending" aria-pressed="false">Pending first</button>
+        <button class="btn-sort" data-sort="completed" aria-pressed="false">Completed first</button>
+      </div>
+      <p id="task-error" class="task-error" role="alert" aria-live="polite"></p>
+      <ul id="task-list" aria-label="Task list"></ul>
+    </section>
+    <section id="links-widget" class="widget">
+      <h2>Quick Links</h2>
+      <form id="add-link-form" autocomplete="off">
+        <input
+          id="link-label"
+          type="text"
+          placeholder="Label"
+          autocomplete="off"
+          aria-label="Link label"
+        />
+        <input
+          id="link-url"
+          type="url"
+          placeholder="https://…"
+          autocomplete="off"
+          aria-label="Link URL"
+        />
+        <button type="submit">Add</button>
+      </form>
+      <div id="link-list" aria-label="Quick links"></div>
+    </section>
+  </main>
+  <script defer src="js/app.js"></script>
+</body>
+</html>
